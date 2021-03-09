@@ -3,29 +3,38 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sample AR App</title>
-	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport" />
-	<script src="https://letsee-dev.s3.ap-northeast-2.amazonaws.com/webar/Letsee.0.9.16.min.js"></script>
-	<style media="place" type="text/css">
-		#container {
-			-letsee-target: uri('toystory.json');
-			-letsee-position: coords(0, 0, 0);
-		}
-	</style>
+  
+  <!-- Letsee SDK -->
+  <script src="https://s-developer.letsee.io/api/webar?key=a14d493f1af944522a6dc6f49233919e0026b8cc3625c33e0cd13a2f2a6711df"></script>
+  
+  <style media="place" type="text/css">
+    #container {
+      -letsee-target: uri('https://s-developer.letsee.io/api-tm/target-manager/target-uid/60474d49358ef31bd651db23');
+      width: 140px;
+      height: 200px;
+    }
+  </style>
 </head>
 <body>
 <div id="container">
-  <video id="video" src="sample.mp4" playsinline width="140" height="200" preload="none">
+  <video id="video" src="sample.mp4" playsinline width="140" height="200" preload="none" loop muted>
   </video>
 </div>
 <script>
   const myVideo = document.getElementById('video');
-	const config = {
-		"appKey": "abdc9d670bc3b103374306761da7f20f49f7f23ac57b39d012338fa849229a0f",
-    "trackerType": "PLANAR"
-	};
-	const app = new Letsee(config);
-  app.addEventListener('trackstart', () => {myVideo.play();});
-  app.addEventListener('trackend', () => {myVideo.pause();});
+
+  letsee.ready(() => {
+    letsee.start();
+  
+    letsee.onTrackStart(e => {
+      myVideo.play();
+    });
+    letsee.onTrackEnd(e => {
+      myVideo.pause();
+    });
+    letsee.onTrackMove(e => {});
+  });
+  letsee.init();
 </script>
 </body>
 </html>
