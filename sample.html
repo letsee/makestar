@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sample AR App</title>
+	<meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport" />
+	<script src="https://letsee-dev.s3.ap-northeast-2.amazonaws.com/webar/Letsee.0.9.16.min.js"></script>
+	<style media="place" type="text/css">
+		#container {
+			-letsee-target: uri('toystory.json');
+			-letsee-position: coords(0, 0, 0);
+		}
+	</style>
+</head>
+<body>
+<div id="container">
+  <video id="video" src="sample.mp4" playsinline width="140" height="200" preload="none">
+  </video>
+</div>
+<script>
+  const myVideo = document.getElementById('video');
+	const config = {
+		"appKey": "abdc9d670bc3b103374306761da7f20f49f7f23ac57b39d012338fa849229a0f",
+    "trackerType": "PLANAR"
+	};
+	const app = new Letsee(config);
+  app.addEventListener('trackstart', () => {myVideo.play();});
+  app.addEventListener('trackend', () => {myVideo.pause();});
+</script>
+</body>
+</html>
